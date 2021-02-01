@@ -20,17 +20,21 @@ app.post('/events', (req, res) => {
 
   events.push(event); //most recent event at n, oldest at 0
 
-  axios.post(`http://localhost:${postsPort}/events`, event).catch((err) => {
-    console.log(`${postsPort} offline : `, err.message);
-  });
-  axios.post(`http://localhost:${commentsPort}/events`, event).catch((err) => {
-    console.log(`${commentsPort} offline : `, err.message);
-  });
-  axios.post(`http://localhost:${queryPort}/events`, event).catch((err) => {
+  axios
+    .post(`http://posts-clusterip-srv:${postsPort}/events`, event)
+    .catch((err) => {
+      console.log(`${postsPort} offline : `, err.message);
+    });
+  axios
+    .post(`http://comments-srv:${commentsPort}/events`, event)
+    .catch((err) => {
+      console.log(`${commentsPort} offline : `, err.message);
+    });
+  axios.post(`http://query-srv:${queryPort}/events`, event).catch((err) => {
     console.log(`${queryPort} offline : `, err.message);
   });
   axios
-    .post(`http://localhost:${moderationPort}/events`, event)
+    .post(`http://moderation-srv:${moderationPort}/events`, event)
     .catch((err) => {
       console.log(`${moderationPort} offline : `, err.message);
     });

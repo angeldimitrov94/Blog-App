@@ -22,7 +22,7 @@ app.post('/posts', async (req, res) => {
 
   posts[id] = { id, title };
 
-  await axios.post(`http://localhost:${eventBusPort}/events`, {
+  await axios.post(`http://event-bus-srv:${eventBusPort}/events`, {
     type: 'PostCreated',
     data: { id, title },
   });
@@ -36,5 +36,6 @@ app.post('/events', (req, res) => {
 });
 
 app.listen(postsPort, () => {
+  console.log('v55');
   console.log(`"Posts" service listening on port ${postsPort}`);
 });
