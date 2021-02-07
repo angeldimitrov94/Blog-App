@@ -14,14 +14,13 @@ spec:
     spec:
       containers:
         - name: posts
-          image: a2xd94/posts:latest
+          image: a2xd94/posts
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-clusterip-srv
+  name: posts-srv
 spec:
-  type: ClusterIP
   selector:
     app: posts
   ports:
@@ -33,7 +32,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-srv
+  name: posts-nodeport
 spec:
   type: NodePort
   selector:
